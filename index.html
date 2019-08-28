@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Star Wars Game</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <img id="title" src="assets/images/gameTitle.png">
+            </div>
+            <div class="col-6"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div id="yoda" class="card" style="width: 18rem;">
+                    <img id="yodaSelectImg" class="card-img-top" src="assets/images/yodaSelect-crop.png" alt="yodaSelect">
+                    <div class="card-body">
+                        <h4 id="yodaName" class="card-title">yoda</h4>
+                        <h6 class="card-text">HP: 100</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div id="obiwan" class="card" style="width: 18rem;">
+                    <img id="obiwanSelectImg" class="card-img-top" src="assets/images/obiwanSelect-crop.png" alt="obiwanSelect">
+                    <div class="card-body">
+                        <h4 class="card-title">Obiwan Kenobi</h4>
+                        <h6 class="card-text">HP: 120</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div id="darthVader" class="card" style="width: 18rem;">
+                    <img id="darthVaderSelectImg" class="card-img-top" src="assets/images/darthVaderSelect2-crop.png" alt="darthVaderSelect">
+                    <div class="card-body">
+                        <h4 class="card-title">Darth Vader</h4>
+                        <h6 class="card-text">HP: 150</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div id ="darthMaul" class="card" style="width: 18rem;">
+                    <img id="darthMaulSelectImg" class="card-img-top" src="assets/images/darthMaulSelect-crop.png" alt="darthMaulSelect">
+                    <div class="card-body">
+                        <h4 class="card-title">Darth Maul</h4>
+                        <h6 class="card-text">HP: 80</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"></div>
+            <div class="col-12">
+                <h1 id="scrollingText"></h1>
+            </div>
+    </div>
+
+    <audio id="yodaSelectSound">
+        <source src="assets/audio/yodaSelect.wav" type="audio/mpeg">
+    </audio>
+    <audio id="obiwanSelectSound">
+        <source src="assets/audio/obiwanSelect.wav" type="audio/mpeg">
+    </audio>
+    <audio id="darthVaderSelectSound">
+        <source src="assets/audio/darthVaderSelect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="darthMaulSelectSound">
+        <source src="assets/audio/darthMaulSelect.wav" type="audio/mpeg">
+    </audio>
+    <script src="assets/game.js"></script>
+</body>
+</html>

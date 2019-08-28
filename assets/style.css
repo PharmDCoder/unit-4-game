@@ -1,0 +1,23 @@
+body {
+    background-image: url(images/mainbackground.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-attachment: fixed;
+    background-color: #191919;
+}
+
+#title {
+    max-height: 100rem; 
+}
+
+#scrollingText {
+    margin-top: 10rem;
+    color: #ffd700;
+    font-size: 75px;
+    font-family: Impact;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+

@@ -6,6 +6,11 @@ body {
     background-color: #191919;
 }
 
+button {
+    margin-top: 15rem;
+    margin-left: 5rem;
+}
+
 #title {
     max-height: 100rem; 
 }
@@ -19,5 +24,14 @@ body {
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
+}
+
+#character, #opponent {
+    margin-top: 10rem;
+}
+
+#opponentImg {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 

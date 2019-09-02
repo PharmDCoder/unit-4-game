@@ -24,7 +24,7 @@
                 <div id="yoda" class="card" style="width: 18rem;">
                     <img id="yodaSelectImg" class="card-img-top" src="assets/images/yodaSelect-crop.png" alt="yodaSelect">
                     <div class="card-body">
-                        <h4 id="yodaName" class="card-title">yoda</h4>
+                        <h4 id="yodaName" class="card-title">Yoda</h4>
                         <h6 class="card-text">HP: 100</h6>
                     </div>
                 </div>
@@ -74,11 +74,11 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <button type="button" class="btn btn-warning btn-lg text-center">Attack</button>
+                    <button id="attackBtn" type="button" class="btn btn-warning btn-lg">Attack</button>
                 </div>
                 <div class="col-3">
                     <div id="opponent" class="card" style="width: 18rem;">
-                        <img id="opponentImg" class="card-img-top" src="assets/images/obiwanSelect-crop.png" alt="obiwanSelect">
+                        <img id="opponentImg" class="card-img-top" src="" alt="obiwanSelect">
                         <div class="card-body">
                             <h4 id="opponentName" class="card-title"></h4>
                             <h6 id="opponentHp" class="card-text"></h6>
@@ -91,13 +91,19 @@
         <source src="assets/audio/yodaSelect.wav" type="audio/mpeg">
     </audio>
     <audio id="obiwanSelectSound">
-        <source src="assets/audio/obiwanSelect.wav" type="audio/mpeg">
+        <source src="assets/audio/obiwanSelect.mp3" type="audio/mpeg">
     </audio>
     <audio id="darthVaderSelectSound">
         <source src="assets/audio/darthVaderSelect.wav" type="audio/mpeg">
     </audio>
     <audio id="darthMaulSelectSound">
         <source src="assets/audio/darthMaulSelect.wav" type="audio/mpeg">
+    </audio>
+    <audio id="lightSaber">
+        <source src="assets/audio/lightSaber.wav" type="audio/mpeg">       
+    </audio>
+    <audio id="lightSaber2">
+        <source src="assets/audio/lightSaber2.wav" type="audio/mpeg">       
     </audio>
     <script src="assets/game.js"></script>
 </body>

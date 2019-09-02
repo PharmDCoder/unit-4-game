@@ -6,7 +6,9 @@ $(document).ready(function() {
     var yoda = {
         name: "Yoda",
         hp: 100,
+        attackOriginal: 6,
         attack: 6,
+        counterAttack: 20,
         onSelectID: "#yodaSelectImg",
         onSelectGifSrc: "assets/images/yodaSelect-crop.gif",
         onSelectAudioId: "#yodaSelectSound",
@@ -15,13 +17,18 @@ $(document).ready(function() {
         yodaSelect: function() {
             selectOpponent(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
-        }
+        },
+        battleImgSrc: "assets/images/yodaBattle.png",
+        battleImgGif: "assets/images/yodaBattle.gif"
+
     }
 
     var obiwan = {
-        name: "Obiwan",
+        name: "Obiwan Kenobi",
         hp: 100,
+        attackOriginal: 6,
         attack: 6,
+        counterAttack: 20,
         onSelectID: "#obiwanSelectImg",
         onSelectGifSrc: "assets/images/obiwanSelect-crop.gif",
         onSelectAudioId: "#obiwanSelectSound",
@@ -30,13 +37,17 @@ $(document).ready(function() {
         obiwanSelect: function() {
             selectOpponent(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
-        }
+        },
+        battleImgSrc: "assets/images/obiwanBattle.png",
+        battleImgGif: "assets/images/obiwanBattle.gif"
     }
 
     var darthVader = {
         name: "Darth Vader",
         hp: 100,
+        attackOriginal: 6,
         attack: 6,
+        counterAttack: 20,
         onSelectID: "#darthVaderSelectImg",
         onSelectGifSrc: "assets/images/darthVaderSelect2-crop.gif",
         onSelectAudioId: "#darthVaderSelectSound",
@@ -45,13 +56,17 @@ $(document).ready(function() {
         darthVaderSelect: function() {
             selectOpponent(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
-        }
+        },
+        battleImgSrc: "assets/images/darthVaderBattle.png",
+        battleImgGif: "assets/images/darthVaderBattle.gif"
     }
 
     var darthMaul = {
         name: "Darth Maul",
         hp: 100,
+        attackOriginal: 6,
         attack: 6,
+        counterAttack: 20,
         onSelectID: "#darthMaulSelectImg",
         onSelectGifSrc: "assets/images/darthMaulSelect-crop.gif",
         onSelectAudioId: "#darthMaulSelectSound",
@@ -60,11 +75,14 @@ $(document).ready(function() {
         darthMaulSelect: function() {
             selectOpponent(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
-        }
+        },
+        battleImgSrc: "assets/images/darthMaulBattle.png",
+        battleImgGif: "assets/images/darthMaulBattle.gif"
     }
 
     var characterSelected;
     var opponentSelected;
+
     $("#battleScreen").hide();
 
     $("#yoda").on("click", function() {
@@ -73,26 +91,14 @@ $(document).ready(function() {
 
     $("#obiwan").on("click", function() {
         obiwan.obiwanSelect();
-        console.log("character is " +characterSelected); 
-        console.log("characterSelected type is " +typeof characterSelected);
-        console.log("Obiwan!!!!!");
-        console.log("this is " +this);
     });
 
     $("#darthVader").on("click", function() {
         darthVader.darthVaderSelect();
-        console.log("character is " +characterSelected); 
-        console.log("characterSelected type is " +typeof characterSelected);
-        console.log("Darth Vader!!!!!");
-        console.log("this is " +this);
     });
 
     $("#darthMaul").on("click", function() {
         darthMaul.darthMaulSelect();
-        console.log("character is " +characterSelected); 
-        console.log("characterSelected type is " +typeof characterSelected);
-        console.log("Darth Maul!!!!!");
-        console.log("this is " +this);
     });
 
     function selectCharacter(selectImgId, selectImgSrc, selectAudioId, characterId, delayTime, object) {
@@ -110,15 +116,46 @@ $(document).ready(function() {
     function selectOpponent(selectImgId, selectImgSrc, selectAudioId, characterId, delayTime, object) {
         if (characterSelected != undefined) {
             opponentSelected = object;
-            $('audio'+selectAudioId)[0].play()  
+            $('audio'+selectAudioId)[0].play();  
             $(selectImgId).attr("src", selectImgSrc);
             setTimeout(function() {
                 $(characterId).hide();
                 $("#selectScreen").hide();
                 $("#battleScreen").show();
-                $("body").css("background-image","url(assets/images/battlegroundbackground.jpg)")
+                $("body").css("background-image","url(assets/images/battlegroundbackground.jpg)");
+                console.log("character selected inside select opponent screen is " + characterSelected);
+                battle();
             }, delayTime);
         }
     }
+
+    // This will be a battlemode function
+    function battle() {
+        $("#characterImg").attr("src", characterSelected.battleImgSrc);
+        $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
+        $("#characterName").html(characterSelected.name);
+        $("#opponentName").html(opponentSelected.name);
+        $("#characterHp").html("HP: " + characterSelected.hp);
+        $("#opponentHp").html("HP: " + opponentSelected.hp);
+        
+    }
+
+    $("#attackBtn").on("click", function() {
+        $("#characterImg").attr("src", characterSelected.battleImgGif); 
+        $('audio'+ "#lightSaber")[0].play(); 
+        setTimeout(function() {
+            $("#characterImg").attr("src", characterSelected.battleImgSrc);
+            $("#opponentImg").attr("src", opponentSelected.battleImgGif);
+            $('audio'+ "#lightSaber2")[0].play();
+            opponentSelected.hp = opponentSelected.hp - characterSelected.attack;
+            $("#opponentHp").html("HP: " + opponentSelected.hp);
+            characterSelected.attack = characterSelected.attackOriginal + characterSelected.attack;
+        }, 3000); 
+        setTimeout(() => {
+            $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
+            characterSelected.hp = characterSelected.hp - opponentSelected.counterAttack;
+            $("#characterHp").html("HP: " + characterSelected.hp);
+        }, 6000);
+    });
     
   });

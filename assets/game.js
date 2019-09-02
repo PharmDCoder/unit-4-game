@@ -65,6 +65,7 @@ $(document).ready(function() {
 
     var characterSelected;
     var opponentSelected;
+    $("#battleScreen").hide();
 
     $("#yoda").on("click", function() {
         yoda.yodaSelect();
@@ -113,7 +114,9 @@ $(document).ready(function() {
             $(selectImgId).attr("src", selectImgSrc);
             setTimeout(function() {
                 $(characterId).hide();
-                window.location.replace("battle.html");
+                $("#selectScreen").hide();
+                $("#battleScreen").show();
+                $("body").css("background-image","url(assets/images/battlegroundbackground.jpg)")
             }, delayTime);
         }
     }

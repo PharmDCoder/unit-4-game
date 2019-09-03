@@ -63,30 +63,30 @@
             </div>
     </div>
     <div id="battleScreen" class="container">
-            <div class="row justify-content-center">
-                <div class="col-3">
-                    <div id="character" class="card" style="width: 18rem;">
-                        <img id="characterImg" class="card-img-top" src="" alt="characterSelect">
-                        <div class="card-body">
-                            <h4 id="characterName" class="card-title"></h4>
-                            <h6 id="characterHp"class="card-text"></h6>
-                        </div>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div id="character" class="card" style="width: 18rem;">
+                    <img id="characterImg" class="card-img-top" src="" alt="characterSelect">
+                    <div class="card-body">
+                        <h4 id="characterName" class="card-title"></h4>
+                        <h6 id="characterHp"class="card-text"></h6>
                     </div>
                 </div>
-                <div class="col-3">
-                    <button id="attackBtn" type="button" class="btn btn-warning btn-lg">Attack</button>
-                </div>
-                <div class="col-3">
-                    <div id="opponent" class="card" style="width: 18rem;">
-                        <img id="opponentImg" class="card-img-top" src="" alt="obiwanSelect">
-                        <div class="card-body">
-                            <h4 id="opponentName" class="card-title"></h4>
-                            <h6 id="opponentHp" class="card-text"></h6>
-                        </div>
+            </div>
+            <div class="col-3">
+                <button id="attackBtn" type="button" class="btn btn-warning btn-lg">Attack</button>
+            </div>
+            <div class="col-3">
+                <div id="opponent" class="card" style="width: 18rem;">
+                    <img id="opponentImg" class="card-img-top" src="" alt="obiwanSelect">
+                    <div class="card-body">
+                        <h4 id="opponentName" class="card-title"></h4>
+                        <h6 id="opponentHp" class="card-text"></h6>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <audio id="yodaSelectSound">
         <source src="assets/audio/yodaSelect.wav" type="audio/mpeg">
     </audio>
@@ -104,6 +104,21 @@
     </audio>
     <audio id="lightSaber2">
         <source src="assets/audio/lightSaber2.wav" type="audio/mpeg">       
+    </audio>
+    <audio id="yodaVictorySound">
+        <source src="assets/audio/yodaVictory.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="obiwanVictorySound">
+        <source src="assets/audio/obiwanVictory.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="darthVaderVictorySound">
+        <source src="assets/audio/darthVaderVictory.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="darthMaulVictorySound">
+        <source src="assets/audio/darthMaulVictory.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="winningSound">
+        <source src="assets/audio/winningSoundtrack.mp3" type="audio/mpeg">
     </audio>
     <script src="assets/game.js"></script>
 </body>

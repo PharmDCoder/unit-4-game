@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     var yoda = {
         name: "Yoda",
-        hp: 100,
+        hp: 2,
         attackOriginal: 6,
         attack: 6,
         counterAttack: 20,
@@ -19,7 +19,9 @@ $(document).ready(function() {
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
         },
         battleImgSrc: "assets/images/yodaBattle.png",
-        battleImgGif: "assets/images/yodaBattle.gif"
+        battleImgGif: "assets/images/yodaBattle.gif",
+        victoryGif: "assets/images/yodaVictory.gif",
+        victoryAudioId: "#yodaVictorySound"
 
     }
 
@@ -39,12 +41,14 @@ $(document).ready(function() {
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
         },
         battleImgSrc: "assets/images/obiwanBattle.png",
-        battleImgGif: "assets/images/obiwanBattle.gif"
+        battleImgGif: "assets/images/obiwanBattle.gif",
+        victoryGif: "assets/images/obiwanVictory.gif",
+        victoryAudioId: "#obiwanVictorySound"
     }
 
     var darthVader = {
         name: "Darth Vader",
-        hp: 100,
+        hp: 3,
         attackOriginal: 6,
         attack: 6,
         counterAttack: 20,
@@ -58,14 +62,17 @@ $(document).ready(function() {
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
         },
         battleImgSrc: "assets/images/darthVaderBattle.png",
-        battleImgGif: "assets/images/darthVaderBattle.gif"
+        battleImgGif: "assets/images/darthVaderBattle.gif",
+        victoryGif: "assets/images/darthVaderVictory.gif",
+        victoryAudioId: "#darthVaderVictorySound",
+        delayTimeVictory: 4336.4,
     }
 
     var darthMaul = {
         name: "Darth Maul",
-        hp: 100,
-        attackOriginal: 6,
-        attack: 6,
+        hp: 4,
+        attackOriginal: 30,
+        attack: 30,
         counterAttack: 20,
         onSelectID: "#darthMaulSelectImg",
         onSelectGifSrc: "assets/images/darthMaulSelect-crop.gif",
@@ -77,11 +84,15 @@ $(document).ready(function() {
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
         },
         battleImgSrc: "assets/images/darthMaulBattle.png",
-        battleImgGif: "assets/images/darthMaulBattle.gif"
+        battleImgGif: "assets/images/darthMaulBattle.gif",
+        victoryGif: "assets/images/darthMaulVictory.gif",
+        victoryAudioId: "#darthMaulVictorySound",
+        delayTimeVictory: 4388.6,
     }
 
     var characterSelected;
     var opponentSelected;
+    var enemiesDefeated = 0;
 
     $("#battleScreen").hide();
 
@@ -121,6 +132,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 $(characterId).hide();
                 $("#selectScreen").hide();
+                $("#opponent,#attackBtn").show();
                 $("#battleScreen").show();
                 $("body").css("background-image","url(assets/images/battlegroundbackground.jpg)");
                 console.log("character selected inside select opponent screen is " + characterSelected);
@@ -145,16 +157,41 @@ $(document).ready(function() {
         $('audio'+ "#lightSaber")[0].play(); 
         setTimeout(function() {
             $("#characterImg").attr("src", characterSelected.battleImgSrc);
-            $("#opponentImg").attr("src", opponentSelected.battleImgGif);
-            $('audio'+ "#lightSaber2")[0].play();
             opponentSelected.hp = opponentSelected.hp - characterSelected.attack;
-            $("#opponentHp").html("HP: " + opponentSelected.hp);
-            characterSelected.attack = characterSelected.attackOriginal + characterSelected.attack;
+            characterSelected.attack = characterSelected.attackOriginal + characterSelected.attack;        
+            if (opponentSelected.hp <= 0) {
+                $("#opponent,#attackBtn").hide();
+                // setTimeout(function() {
+                    $("#characterImg").attr("src", characterSelected.victoryGif);
+                    $('audio'+ characterSelected.victoryAudioId)[0].play();
+                    setTimeout(function() {
+                        $("#battleScreen").hide();
+                        $("body").css("background-image","url(assets/images/mainbackground.png)");
+                        $("#selectScreen").show();
+                        enemiesDefeated++;
+                        if (enemiesDefeated === 3) {
+                            $("#selectScreen").hide(); 
+                            $("#battleScreen").hide();
+                            $("#title").hide();  
+                            $("body").css("background-image","url(assets/images/theEnd.gif)"); 
+                            $("body").css("background-position","center");
+                            $('audio'+ "#winningSound")[0].play();                
+                        }
+                    }, 3000);
+                // }, characterSelected.delayTimeVictory);
+            } else {
+                $('audio'+ "#lightSaber2")[0].play();
+                $("#opponentHp").html("HP: " + opponentSelected.hp);
+                $("#opponentImg").attr("src", opponentSelected.battleImgGif);
+            }
         }, 3000); 
         setTimeout(() => {
             $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
             characterSelected.hp = characterSelected.hp - opponentSelected.counterAttack;
             $("#characterHp").html("HP: " + characterSelected.hp);
+            if (characterSelected.hp <= 0) {
+                $("#character ,#attackBtn").hide();
+            }
         }, 6000);
     });
     

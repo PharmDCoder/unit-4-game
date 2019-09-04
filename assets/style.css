@@ -1,39 +1,22 @@
 body {
     background-image: url(images/mainbackground.png);
     background-repeat: no-repeat;
-    background-position: center bottom;
+    background-position: center center;
     background-attachment: fixed;
+    background-size: cover;
     background-color: #191919;
 }
 
-button {
-    margin-top: 15rem;
-    margin-left: 5rem;
-}
-
-#title {
-    max-height: 100rem; 
+h1 {
+    font-size: 5vw;
 }
 
 #scrollingText {
-    margin-top: 10rem;
     color: #ffd700;
-    font-size: 75px;
     font-family: Impact;
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-
-#character, #opponent {
-    margin-top: 10rem;
 }
 
 #opponentImg {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
-
-
-

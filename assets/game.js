@@ -1,3 +1,5 @@
+//If you are reading this, I apologize for not having more comments!  I plan to do this in the morning on 9/5 :)
+
 $(document).ready(function() {
 
     //Adds text to bottom of DOM to have user select character

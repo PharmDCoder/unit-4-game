@@ -1,10 +1,10 @@
 body {
-    background-image: url(images/mainbackground.png);
+    /* background-image: url(images/mainbackground.png); */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
-    background-color: #191919;
+    background-color: #000000;
 }
 
 h1 {

@@ -1,19 +1,21 @@
 $(document).ready(function() {
 
-    // Make our variables global to the runtime of our application
+    //Adds text to bottom of DOM to have user select character
     $("#scrollingText").text(". . . . . . .Select Your Character. . . . . . .");  
 
+    //The following several lines of code are set up as objects for each of the 4 characters to decrease hard coding in game functions
     var yoda = {
         name: "Yoda",
-        hp: 100,
-        attackOriginal: 6,
-        attack: 6,
-        counterAttack: 20,
+        hp: 160,
+        attackOriginal: 5,
+        attack: 5,
+        counterAttack: 5,
         onSelectID: "#yodaSelectImg",
         onSelectGifSrc: "assets/images/yodaSelect-crop.gif",
         onSelectAudioId: "#yodaSelectSound",
         characterId: "#yoda",
         delayTime: 1760,
+        //object property that calls function inside each of the 4 objects allows global variable to be assigned to character object either as character or opponent to use this.property in global functions outside of object
         yodaSelect: function() {
             selectOpponent(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
             selectCharacter(this.onSelectID, this.onSelectGifSrc, this.onSelectAudioId, this.characterId, this.delayTime, this);
@@ -30,10 +32,10 @@ $(document).ready(function() {
 
     var obiwan = {
         name: "Obiwan Kenobi",
-        hp: 4,
+        hp: 140,
         attackOriginal: 6,
         attack: 6,
-        counterAttack: 20,
+        counterAttack: 10,
         onSelectID: "#obiwanSelectImg",
         onSelectGifSrc: "assets/images/obiwanSelect-crop.gif",
         onSelectAudioId: "#obiwanSelectSound",
@@ -55,9 +57,9 @@ $(document).ready(function() {
 
     var darthVader = {
         name: "Darth Vader",
-        hp: 3,
-        attackOriginal: 6,
-        attack: 6,
+        hp: 120,
+        attackOriginal: 7,
+        attack: 7,
         counterAttack: 20,
         onSelectID: "#darthVaderSelectImg",
         onSelectGifSrc: "assets/images/darthVaderSelect2-crop.gif",
@@ -80,10 +82,10 @@ $(document).ready(function() {
 
     var darthMaul = {
         name: "Darth Maul",
-        hp: 4,
-        attackOriginal: 30,
-        attack: 30,
-        counterAttack: 20,
+        hp: 100,
+        attackOriginal: 8,
+        attack: 8,
+        counterAttack: 25,
         onSelectID: "#darthMaulSelectImg",
         onSelectGifSrc: "assets/images/darthMaulSelect-crop.gif",
         onSelectAudioId: "#darthMaulSelectSound",
@@ -100,16 +102,19 @@ $(document).ready(function() {
         losesGif: "assets/images/darthMaulLoses.gif",
         losesAudioId: "#darthMaulLosesSound",
         victoryTime: 4389,
-        losesTime: 38400
+        losesTime: 3840
     }
 
+    //establishing global variables
     var characterSelected;
     var opponentSelected;
     var enemiesDefeated = 0;
 
+    //Game has three screen modes so this hides the two not in use
     $("#battleScreen").hide();
     $("#reset").hide();
 
+    //On click event that goes into respective object to assign object as either character or opponent
     $("#yoda").on("click", function() {
         yoda.yodaSelect();
     });
@@ -126,12 +131,19 @@ $(document).ready(function() {
         darthMaul.darthMaulSelect();
     });
 
+    //function to assign object as character and play audio/visual associated with selection
     function selectCharacter(selectImgId, selectImgSrc, selectAudioId, characterId, delayTime, object) {
+        //setting up if statement to run if character has not been picked yet and user clicks on a character
         if (characterSelected === undefined) {
+            //assigns object to characterSelected variable
             characterSelected = object;
+            //plays audio associated with object's specific select sound
             $('audio'+selectAudioId)[0].play()  
+            //turns still image into gif on selection
             $(selectImgId).attr("src", selectImgSrc);
+            //while select character audio is running we will time this function out 
             setTimeout(function() {
+                //removes selected character from opponent options
                 $(characterId).hide();
                 $("#scrollingText").text(". . . . . . .Select Your Opponent. . . . . . . .");
             }, delayTime);
@@ -192,10 +204,10 @@ $(document).ready(function() {
                     $("#selectScreen").show();
                     $("#opponent").css({"background-color": "#fff", "color": "#212529"});
                     enemiesDefeated++;
-                    if (enemiesDefeated === 2) {
+                    if (enemiesDefeated === 3) {
                         $("#selectScreen").hide(); 
-                        $("#battleScreen").hide(); 
-                        $('audio'+ "#winningSound")[0].play();   
+                        $("#battleScreen").hide();
+                        $('audio'+ "#winningSoundtrack")[0].play();   
                         //want to make a reset button with onclick here
                         $("#reset").show();
                         $("#titleReset").attr("src", "assets/images/theEndTitle.png"); 
@@ -210,21 +222,23 @@ $(document).ready(function() {
             }
         }, 3000); 
         setTimeout(() => {
-            $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
-            characterSelected.hp = characterSelected.hp - opponentSelected.counterAttack;
-            $("#characterHp").html("HP: " + characterSelected.hp);
-            if (characterSelected.hp <= 0) {
-                $("#selectScreen").hide(); 
-                $("#battleScreen").hide();
-                $('audio'+ characterSelected.losesAudioId)[0].play();
-                // resetGame();
-                $("#reset").show();
-                $("#titleReset").attr("src", "assets/images/gameOverTitle.png"); 
-                $("#gifReset").attr("src", characterSelected.losesGif); 
-                $("#resetBtn").hide();
-                setTimeout(() => {
-                    resetGame();
-                }, characterSelected.losesTime); 
+            if (opponentSelected.hp > 0) {
+                $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
+                characterSelected.hp = characterSelected.hp - opponentSelected.counterAttack;
+                $("#characterHp").html("HP: " + characterSelected.hp);
+                if (characterSelected.hp <= 0) {
+                    $("#selectScreen").hide(); 
+                    $("#battleScreen").hide();
+                    $('audio'+ characterSelected.losesAudioId)[0].play();
+                    // resetGame();
+                    $("#reset").show();
+                    $("#titleReset").attr("src", "assets/images/gameOverTitle.png"); 
+                    $("#gifReset").attr("src", characterSelected.losesGif); 
+                    $("#resetBtn").hide();
+                    setTimeout(() => {
+                        resetGame();
+                    }, characterSelected.losesTime); 
+                }
             }
         }, 6000);
     });

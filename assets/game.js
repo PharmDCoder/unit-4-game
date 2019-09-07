@@ -1,5 +1,3 @@
-//If you are reading this, I apologize for not having more comments!  I plan to do this in the morning on 9/5 :)
-
 $(document).ready(function() {
 
     //Adds text to bottom of DOM to have user select character
@@ -133,9 +131,9 @@ $(document).ready(function() {
         darthMaul.darthMaulSelect();
     });
 
-    //function to assign object as character and play audio/visual associated with selection
+    //function to assign object as character
     function selectCharacter(selectImgId, selectImgSrc, selectAudioId, characterId, delayTime, object) {
-        //setting up if statement to run if character has not been picked yet and user clicks on a character
+        //setting up if statement to run if character has not been picked yet and user clicks on a character; delays time to allow gif and audio to run
         if (characterSelected === undefined) {
             //assigns object to characterSelected variable
             characterSelected = object;
@@ -152,24 +150,35 @@ $(document).ready(function() {
         }
     }
 
+    //function to assign object as oponent
     function selectOpponent(selectImgId, selectImgSrc, selectAudioId, characterId, delayTime, object) {
+        //want to select opponent 2nd so need this if statement to satisfy that condition and allows gif and audio to run w/ time delay
         if (characterSelected != undefined) {
+            //assigns object to opponentSelected variable
             opponentSelected = object;
+            //plays object's "select character audio"
             $('audio'+selectAudioId)[0].play();  
+            //plays select gif
             $(selectImgId).attr("src", selectImgSrc);
+            //this function delays the time to allow select character audio/visuals to run before sending user to battle mode
             setTimeout(function() {
+                //hides opponent from select screen once selcted
                 $(characterId).hide();
+                //hides select screen
                 $("#selectScreen").hide();
+                //shows opponent and attack button
                 $("#opponent,#attackBtn").show();
+                //shows battle screen
                 $("#battleScreen").show();
+                //changes the background to battle screen mode
                 $("body").css("background-image","url(assets/images/battlegroundbackground.jpg)");
-                console.log("character selected inside select opponent screen is " + characterSelected);
+                //calls battle function to set up DOM for battle
                 battle();
             }, delayTime);
         }
     }
 
-    // This will be a battlemode function
+    // This function sets up the battle scene on the DOM by using JQuery to grab all of the info from character and opponent objects
     function battle() {
         $("#characterImg").attr("src", characterSelected.battleImgSrc);
         $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
@@ -185,59 +194,101 @@ $(document).ready(function() {
         location.reload();
     }
 
-
+    //on click event that runs the battle mode when user hits "attack button", 
     $("#attackBtn").on("click", function() {
+        //plays character battle gif
         $("#characterImg").attr("src", characterSelected.battleImgGif); 
+        //plays lightsaber gif
         $('audio'+ "#lightSaber")[0].play(); 
+        //sets time out for opponent to counter attack and run opponent attack gif and light saber audio
         setTimeout(function() {
+            //turns character gif back to still
             $("#characterImg").attr("src", characterSelected.battleImgSrc);
+            //sets new value for opponent HP to reflect character attack
             opponentSelected.hp = opponentSelected.hp - characterSelected.attack;
+            //sets new value for character attack since it improves every time
             characterSelected.attack = characterSelected.attackOriginal + characterSelected.attack;        
+            //this checks to see if the opponent died before running counter attack
             if (opponentSelected.hp <= 0) {
-                // $("#opponent,#attackBtn").hide();
+                // hide attack button
                 $("#attackBtn").hide();
+                //opponent image fades
                 $("#opponent").fadeOut(3000);
+                //turns opponent card background red
                 $("#opponent").css({"background-color": "red", "color": "white"});
+                //plays character victory gif
                 $("#characterImg").attr("src", characterSelected.victoryGif);
+                //plays character victory audio
                 $('audio'+ characterSelected.victoryAudioId)[0].play();
+                //time out functionn to allow for victory audio/visuals to play before progressing game
                 setTimeout(function() {
+                    //hides battle screen
                     $("#battleScreen").hide();
+                    //changes background to character select background
                     $("body").css("background-image","url(assets/images/mainbackground.png)");
+                    //shows character select screen
                     $("#selectScreen").show();
+                    //resets opponent character card background to white
                     $("#opponent").css({"background-color": "#fff", "color": "#212529"});
+                    //adds an enemy defeated which matters in the next loop to signal end of game due to winning
                     enemiesDefeated++;
+                    //if loop to check to see if all enemies have been defeated
                     if (enemiesDefeated === 3) {
+                        //hide select screen
                         $("#selectScreen").hide(); 
+                        //hide battle screen
                         $("#battleScreen").hide();
+                        //play winning music
                         $('audio'+ "#winningSoundtrack")[0].play();   
-                        //want to make a reset button with onclick here
+                        //shows reset screen
                         $("#reset").show();
+                        //add the end title
                         $("#titleReset").attr("src", "assets/images/theEndTitle.png"); 
+                        //add win gif
                         $("#gifReset").attr("src", "assets/images/theEnd.gif"); 
+                        //add reset button
                         $("#resetBtn").on("click", resetGame);
                     }
                 }, characterSelected.victoryTime);
+            //if you don't kill the opponent this happens before looping back
             } else {
+                //light saber plays again -- had to make a duplicate sound w/ different name
                 $('audio'+ "#lightSaber2")[0].play();
+                //changes the opponent's HP after character attack
                 $("#opponentHp").html("HP: " + opponentSelected.hp);
+                //starts opponent battle gif
                 $("#opponentImg").attr("src", opponentSelected.battleImgGif);
             }
         }, 3000); 
+        //allows a delay if opponent conterattacks
         setTimeout(() => {
+            //if opponent is still alive
             if (opponentSelected.hp > 0) {
+                //play opponent battle gif
                 $("#opponentImg").attr("src", opponentSelected.battleImgSrc);
+                //adjust character hp value from opponent counterattack
                 characterSelected.hp = characterSelected.hp - opponentSelected.counterAttack;
+                //send new character hp value to DOM
                 $("#characterHp").html("HP: " + characterSelected.hp);
+                //if statement to determine if character dies
                 if (characterSelected.hp <= 0) {
+                    //hide select screen
                     $("#selectScreen").hide(); 
+                    //hide battle screen
                     $("#battleScreen").hide();
+                    //play loss audio for character
                     $('audio'+ characterSelected.losesAudioId)[0].play();
-                    // resetGame();
+                    // resetGame displaus and picks loss screen for character
                     $("#reset").show();
+                    //displays "game over"
                     $("#titleReset").attr("src", "assets/images/gameOverTitle.png"); 
+                    //displays character loses gif
                     $("#gifReset").attr("src", characterSelected.losesGif); 
+                    //hides reset button
                     $("#resetBtn").hide();
+                    //times auto reset to play loser audio and visual
                     setTimeout(() => {
+                        //resets game
                         resetGame();
                     }, characterSelected.losesTime); 
                 }
